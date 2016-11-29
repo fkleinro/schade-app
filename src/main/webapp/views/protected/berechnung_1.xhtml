@@ -1,0 +1,475 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <div class="view">
+        <div class="container-fluid">
+            <div class="panel panel-info">
+                <div class="panel-heading"> <h3>Kunden und erste Vertragsinformation</h3></div>
+                <div class="panel-body">  
+
+                    <h:messages  class="alert alert-info" for="mainForm" />
+                    <p:focus for="geburtsjahr"/>                  
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Land: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                <select jsf:id="land"  name="land" class="form-control" value="#{berechnungBean.berechnung.landCode}" required="true" size="1">
+                                    <f:selectItem itemValue="1" itemLabel="Deutschland"/>
+                                    <f:selectItem itemValue="2" itemLabel="Östereich"/>
+                                    <f:selectItem itemValue="3" itemLabel="Schweiz"/>                                        
+                                </select>                                    
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Geschlecht: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                <select jsf:id="geschlecht"  name="geschlecht" class="form-control" value="#{berechnungBean.berechnung.vertragVersPGeschlecht}" required="true" size="1">
+                                    <f:selectItem itemValue="true" itemLabel="weiblich"/>
+                                    <f:selectItem itemValue="false" itemLabel="männlich"/>                                      
+                                </select>                                    
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Geburtsjahr: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-1 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="geburtsjahr" name="geburtsjahr" class="form-control" value="#{berechnungBean.berechnung.vertragVersPGeburtsjahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                            </div>                           
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                            </div>    
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Geburtsjahr d. Partners: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-1 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="geburtsjahrPartner" name="geburtsjahrPartner" class="form-control" value="#{berechnungBean.berechnung.vertragPartnerGeburtsjahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Vertragsart: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                <select jsf:id="vertragArt"  name="vertragArt" class="form-control" value="#{berechnungBean.berechnung.vertragArt}" size="1">
+                                    <f:selectItem itemValue="" itemLabel="-"/>
+                                    <f:selectItem itemValue="0" itemLabel="WasWeißIch"/>                                                                      
+                                </select>  
+                                <mark>You can use the mark tag to highlight</mark> text
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Vertragszahlweise: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                <select jsf:id="vertragBeitragZahlweise"  name="vertragBeitragZahlweise" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischZahlweise}" size="1">
+                                    <f:selectItem itemValue="" itemLabel="-"/>
+                                    <f:selectItem itemValue="1" itemLabel="monatlich"/>   
+                                    <f:selectItem itemValue="3" itemLabel="vierteljährlich"/> 
+                                    <f:selectItem itemValue="12" itemLabel="jährlich"/> 
+                                </select>                                    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Monatsbeitrag: <span class="mandatory">*</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    <input type="text" jsf:id="vertragMonatsbeitrag" name="vertragMonatsbeitrag" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodisch}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Einmalzahlung: <span class="mandatory">*</span>
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6">  
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="vertragEinmalzahlung" name="vertragEinmalzahlung" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragAnfangseinlage}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">                             
+                            <div class="form-group"></div>                       
+                        </div>                   
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"> <h3>Weitere Daten für die komplexe Berechnung</h3></div>
+                    <div class="panel-body">       
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Wurde der Vertrag bereits beendet? <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="isVertragBeendet"  name="isVertragBeendet" class="form-control" value="#{berechnungBean.berechnung.isVertragBeendet}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="true" itemLabel="Ja"/>   
+                                        <f:selectItem itemValue="false" itemLabel="Nein"/> 
+
+                                    </select>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Beitragsdynamik: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">%</span>
+                                        <input type="text" jsf:id="vertragBeitragDynamik" name="vertragBeitragDynamik" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikProzent}" minlength="1" maxlength="10" required="true" pattern="^\(d+(\.|\,)\d)|d+$" title="Betrag z.B. 0,569"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Rhythmus der Dynamik: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragBeitragDynamikRhythmus"  name="vertragBeitragDynamikRhythmus" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikRhythmus}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="1" itemLabel="monatlich"/>   
+                                        <f:selectItem itemValue="3" itemLabel="vierteljährlich"/> 
+                                        <f:selectItem itemValue="12" itemLabel="jährlich"/> 
+                                    </select>                                    
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Kündigungsjahr der Dynamik: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragBeitragDynamikKuendigungJahr" name="vertragBeitragDynamikKuendigungJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikKuendigungJahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div> 
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Jahr des Vertragsbeginn: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragBeginnJahr" name="vertragBeginnJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeginnJahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Jahr des Vertragsende: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragEndeJahr" name="vertragEndeJahr" class="form-control" value="#{berechnungBean.berechnung.vertragEndeJahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                                </div>    
+
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Endejahr für Beitrag: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragEndeJahrBeitrag" name="vertragEndeJahrBeitrag" class="form-control" value="#{berechnungBean.berechnung.vertragEndeJahrBeitrag}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Vertrag gekündigt? <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragIsKuendigung"  name="vertragIsKuendigung" class="form-control" value="#{berechnungBean.berechnung.vertragIsKuendigung}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="true" itemLabel="Ja"/>   
+                                        <f:selectItem itemValue="false" itemLabel="Nein"/> 
+                                    </select>                                    
+                                </div>
+
+
+
+                                <h:panelGroup rendered="#{berechnungBean.berechnung.vertragJahrKuendigung == null}">    
+                                    <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                        Datum der Kündigung: <span class="mandatory">*</span>
+                                    </div>
+                                    <div class="col-md-2 col-sm-3 col-xs-6">
+                                        <div class="input-group">
+                                            <p:calendar id="vertragKuendigungEndeDatum" value="#{berechnungBean.berechnung.vertragKuendigungEndeDatum}" locale="de" navigator="true" pattern="dd.MM.yyyy" />              
+                                        </div>
+                                    </div>
+                                </h:panelGroup>  
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Jahr der Kündigung: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragJahrKuendigung" name="vertragJahrKuendigung" class="form-control" value="#{berechnungBean.berechnung.vertragJahrKuendigung}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                                </div>
+                            </div>                           
+                        </div>
+
+                        <div class="row">                           
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Betrag bei Kündigung: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="vertragKuendigungEndeBetrag" name="vertragKuendigungEndeBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragKuendigungEndeBetrag}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+                            </div>                                               
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div> 
+                        <div class="row">                            
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Jahr der Beitragreduktion: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <input type="text" jsf:id="vertragBeitragReduktionJahr" name="vertragBeitragReduktionJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischReduktionJahr}" placeholder="z.B. 2008" minlength="4" maxlength="4" required="true" pattern="[0-9][0-9][0-9][0-9]" title="Geben Sie nur vier Zahlen an z.B. 2008"/>
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Monatsbeitrag der Reduktion: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="vertragMonatsbeitragReduktionBetrag" name="vertragMonatsbeitragReduktionBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischReduktionEuro}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div> 
+                        <div class="row">                            
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Aktuelles RKW Datum: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <p:calendar id="vertragAktuellRKWDatum" value="#{berechnungBean.berechnung.vertragAktuellRKWDatum}" locale="de" navigator="true" pattern="dd.MM.yyyy" />                               
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Plausibetrag: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="vertragPlausiBeitragssummeBetrag" name="vertragPlausiBeitragssummeBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragPlausiBeitragssummeBetrag}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Verbundene Lebenversicherung: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragIsVerbundeneLeben"  name="vertragIsVerbundeneLeben" class="form-control" value="#{berechnungBean.berechnung.vertragIsVerbundeneLeben}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="true" itemLabel="Ja"/>   
+                                        <f:selectItem itemValue="false" itemLabel="Nein"/> 
+
+                                    </select>                                    
+                                </div>
+                            </div>                                                    
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Leistungsart im Todesfall: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragLeistungsartTod"  name="vertragLeistungsartTod" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungsartTod}" size="1">                                 
+                                        <f:selectItem itemValue="-1" itemLabel="keine Ahnung"/>
+                                        <f:selectItem itemValue="0" itemLabel="keine"/>   
+                                        <f:selectItem itemValue="1" itemLabel="Vertragsguthaben"/> 
+                                        <f:selectItem itemValue="1" itemLabel="fixe Todesfallleistung"/> 
+
+                                    </select>                                    
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Betrag im Todesfall: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="betragTodesfallleistung" name="betragTodesfallleistung" class="form-control" value="#{berechnungBean.berechnung.betragTodesfallleistung}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Leistungsart Unfalltod: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragLeistungsartUnfallTod"  name="vertragLeistungsartUnfallTod" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungsartUnfallTod}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="0" itemLabel="Unfall"/>   
+                                        <f:selectItem itemValue="1" itemLabel="Nein"/> 
+
+                                    </select>                                    
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Betrag Unfalltodleistung: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">€</span>
+                                            <input type="text" jsf:id="betragUnfalltodLeistung" name="betragUnfalltodLeistung" class="form-control" value="#{berechnungBean.berechnung.betragUnfalltodLeistung}" minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    BU Leistungsmonatsrente: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <input type="text" jsf:id="betragBULeistungMonatsrente" name="betragBULeistungMonatsrente" class="form-control" value="#{berechnungBean.berechnung.betragBULeistungMonatsrente}"  minlength="1" maxlength="10" required="true" pattern="^\d+((\.|\,)\d{2})?" title="Geben Sie einen Betrag an z.B. 123,56"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    BU Leistungsart: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="vertragLeistungsartBU"  name="vertragLeistungsartBU" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungsartBU}" size="1">
+
+                                        <f:selectItem itemValue="-1" itemLabel="keine Ahnung"/>
+                                        <f:selectItem itemValue="0" itemLabel="keine"/>   
+                                        <f:selectItem itemValue="1" itemLabel="Beitragsbefreiung"/> 
+                                        <f:selectItem itemValue="2" itemLabel="Rende"/> 
+                                        <f:selectItem itemValue="3" itemLabel="Rente+Beitragsbefreiung"/> 
+
+                                    </select>                                    
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    BU Beitrag befreit: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-1 col-sm-3 col-xs-6">
+
+                                    <select jsf:id="isBUBeitragsbefreiung"  name="isBUBeitragsbefreiung" class="form-control" value="#{berechnungBean.berechnung.isBUBeitragsbefreiung}" size="1">
+                                        <f:selectItem itemValue="" itemLabel="-"/>
+                                        <f:selectItem itemValue="true" itemLabel="Ja"/>   
+                                        <f:selectItem itemValue="false" itemLabel="Nein"/> 
+
+                                    </select>                                    
+                                </div>
+                            </div>                      
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div> 
+
+
+
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"> <h3>Kontakt</h3></div>
+                    <div class="panel-body">       
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Kontakt über Email: <span class="mandatory">*</span>
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">@</span>
+                                        <input type="text" jsf:id="email" name="email" class="form-control" value="#{berechnungBean.berechnung.email}" maxlength="60" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required="true" title="Only a valid email address" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div> 
+
+                        <div class="row">                             
+                            <div class="form-group"></div>                       
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-10 col-sm-9 col-xs-12 control-label">
+                                </div> 
+                                <div class="col-lg-2 col-sm-3 col-xs-12">                                                                                 
+                                    <button title="Berechnung starten" type="submit" class="btn btn-primary" jsf:action="#{berechnungBean.starteBerechnung('berechnungsergebnis')}">
+                                        Berechnung starten
+                                    </button>  
+                                </div>    
+                            </div>                                
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> 
+</ui:composition> 

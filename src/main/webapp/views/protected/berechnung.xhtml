@@ -1,0 +1,518 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <div class="view">
+<!--        <div class="container-fluid" >-->
+        <div class="container" >
+            <h3><p class="text-primary">Das Original – Der Schnellrechner zur Rückabwicklung</p></h3>  
+            <hr style="width: 100%; color: #428bca; height: 1px; background-color:#428bca;"></hr>
+
+            <div class="panel panel-info">
+                <div class="panel-heading"><h4>Persönliche Daten zum Versicherten</h4></div>
+                <div class="panel-body">  
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />    
+                    <div class="row">
+                        <div class="form-group">
+                            <!-- Label/Auswahl: Geschlecht -->
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Geschlecht: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <select jsf:id="vertragVersPGeschlecht" name="vertragVersPGeschlecht" value="#{berechnungBean.berechnung.vertragVersPGeschlecht}" size="1" class="form-control">
+                                    <f:selectItem itemValue="false" itemLabel="weiblich"/>
+                                    <f:selectItem itemValue="true" itemLabel="männlich"/>
+                                </select>                                    
+                            </div>
+                            <!-- Label/Eingabe: Geburtsjahr -->
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                Geburtsjahr: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="geburtsjahr" name="geburtsjahr" class="form-control" value="#{berechnungBean.berechnung.vertragVersPGeburtsjahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie bitte nur die Jahreszahl an"></input>  
+                            </div>                           
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="panel-heading"><h4>Grundangaben zum Vertrag und zur Beitragsentwicklung</h4></div>
+                <div class="panel-body">        
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Vertragsbeginn: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="vertragBeginnJahr" name="vertragBeginnJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeginnJahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie nur vier Ziffern an z. B. 2008"/>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                Vertragsende: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="vertragEndeJahr" name="vertragEndeJahr" class="form-control" value="#{berechnungBean.berechnung.vertragEndeJahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie nur vier Ziffern an z. B. 2008"/>
+                            </div>    
+                        </div>
+                    </div> 
+
+                    <div class="row">  
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Beitragzahlungsende:
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="vertragEndeJahrBeitrag" name="vertragEndeJahrBeitrag" class="form-control" value="#{berechnungBean.berechnung.vertragEndeJahrBeitrag}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie einen Betrag an z. B. 123,56"/>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                Vertragsart: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <select size="2" jsf:id="vertragTyp"  name="vertragTyp" class="form-control" value="#{berechnungBean.berechnung.vertragTyp}"  >
+                                    <f:selectItem itemValue="1" itemLabel="klassisch"/>   
+                                    <f:selectItem itemValue="2" itemLabel="fondsgebunden"/> 
+                                </select>                                    
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div class="row">  
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Beitrag: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    
+                                    <h:inputText  id="vertragMonatsbeitrag" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodisch}"  title="Geben Sie einen Betrag an bspw. 123,56">
+                                        <f:converter converterId="currencyConverter" />
+                                    </h:inputText>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                bei Zahlweise: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <select size="5" jsf:id="vertragBeitragZahlweise"  name="vertragBeitragZahlweise" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischZahlweise}"  >
+                                    <f:selectItem itemValue="12" itemLabel="monatlich"/>   
+                                    <f:selectItem itemValue="6" itemLabel="halbjährlich"/> 
+                                    <f:selectItem itemValue="3" itemLabel="vierteljährlich"/> 
+                                    <f:selectItem itemValue="1" itemLabel="jährlich"/> 
+                                    <f:selectItem itemValue="0" itemLabel="Einmalzahlung"/>
+                                </select>                                    
+                            </div>
+                        </div>
+                        <hr></hr>
+                    </div>
+
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label>
+<!--                                    <input id="beitragsdynamikCheckbox" type="checkbox" class="btn btn-info" data-toggle="collapse" data-target="#beitragsdynamik">Wurde eine Beitragsdynamik vereinbart?</input>-->
+                                    <h:selectBooleanCheckbox value="#{berechnungBean.berechnung.isGuiCheckedBeitragsdynamik}" >
+                                        <f:ajax execute="@this" render="vertragBeitragsdynamikGroup" ></f:ajax>
+                                    </h:selectBooleanCheckbox>Wurde eine Beitragsdynamik vereinbart?  
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <h:panelGroup id="vertragBeitragsdynamikGroup">
+                        <h:panelGroup rendered="#{berechnungBean.berechnung.isGuiCheckedBeitragsdynamik}" layout="block"> 
+<!--                    <div id="beitragsdynamik" class="row collapse" >-->
+                        <div class="row">                            
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Beitragsdynamik:
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">%</span>
+                                    <h:inputText id="vertragBeitragDynamikProzentfuss" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikProzentfuss}" title="Dynamiksatz, bspw. 5,0">
+                                        <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00" />
+<!--                                        <f:converter converterId="javax.faces.BigDecimal" locale="de-DE" />-->
+                                    </h:inputText>
+<!--                                    
+                                    <input type="text" id="vertragBeitragDynamikProzentfuss" name="vertragBeitragDynamikProzentfuss" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikProzentfuss}" title="Dynamiksatz, bspw. 5,0">
+                                        <f:converter converterId="javax.faces.BigDecimal" />
+                                        <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                    </input>
+-->                  
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                Rhythmus der Dynamik: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <select size="1" jsf:id="vertragBeitragDynamikRhythmus"  name="vertragBeitragDynamikRhythmus" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikRhythmus}"  >
+                                    <f:selectItem itemValue="1" itemLabel="jährlich"/>   
+                                    <f:selectItem itemValue="2" itemLabel="zweijährlich"/> 
+                                    <f:selectItem itemValue="3" itemLabel="dreijährlich"/> 
+                                </select>                                    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Aussetzen der Beitragsdynamik im Jahr: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="vertragBeitragDynamikKuendigungJahr" name="vertragBeitragDynamikKuendigungJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragDynamikKuendigungJahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie nur vier Ziffern an z. B. 2008"/>
+                            </div>    
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Beitragsänderung im Jahr: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <input type="text" jsf:id="vertragBeitragPeriodischReduktionJahr" name="vertragBeitragPeriodischReduktionJahr" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischReduktionJahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie nur vier Ziffern an z. B. 2008"/>
+                            </div>    
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                Geänderter Beitrag: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    <h:inputText id="vertragBeitragPeriodischReduktionEuro" class="form-control" value="#{berechnungBean.berechnung.vertragBeitragPeriodischReduktionEuro}" title="Geben Sie den neuen Beitrag an, bspw. 123,56">  
+                                        <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div>
+                        <hr></hr>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label>
+                                    <h:selectBooleanCheckbox  value="#{berechnungBean.berechnung.vertragIsKuendigung}" >
+                                        <f:ajax execute="@this" render="vertragIsKuendigungGroup" ></f:ajax>
+                                    </h:selectBooleanCheckbox>Wurde der Vertrag bereits gekündigt und ausgezahlt?  
+                                </label>
+                            </div>
+                        </div>                           
+                    </div>                    
+                    <h:panelGroup id="vertragIsKuendigungGroup">
+                        <h:panelGroup  rendered="#{berechnungBean.berechnung.vertragIsKuendigung}" layout="block"> 
+                            <div class="row">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Auszahlungsbetrag: 
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <h:inputText id="vertragKuendigungEndeBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragKuendigungEndeBetrag}" title="Geben Sie den Auszahlungsbetrag an, z. B. 123,56">
+                                            <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                    Kündigung am: 
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <p:calendar 
+                                            id="vertragKuendigungEndeDatum" 
+                                            value="#{berechnungBean.berechnung.vertragKuendigungEndeDatum}" 
+                                            locale="de_DE" 
+                                            navigator="true" 
+                                            pattern="dd.MM.yyyy">
+                                            <f:converter converterId="localDateTimeConverter" />                                      
+                                        </p:calendar>
+                                    </div>
+                                </div>
+                            </div>    
+                            <div class="row">
+                                <div class="form-group"></div>
+                            </div>
+                            <hr></hr>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <label>
+<!--                                    <input id="aktuellrkwbekanntCheckbox" type="checkbox" value="" class="btn btn-info" data-toggle="collapse" data-target="#aktuellrkwbekannt">Liegen Informationen aus einer aktuellen Standmitteilung vor?</input>-->
+                                    <h:selectBooleanCheckbox value="#{berechnungBean.berechnung.isGuiCheckedAktuellRKW}" >
+                                        <f:ajax execute="@this" render="vertragAktuellRKWGroup" ></f:ajax>
+                                    </h:selectBooleanCheckbox>Liegen Informationen aus einer aktuellen Standmitteilung vor? 
+                                </label>
+                            </div>    
+                        </div>                           
+                    </div>
+<!--                    <div id="aktuellrkwbekannt" class="row collapse">-->
+                    <h:panelGroup id="vertragAktuellRKWGroup">
+                        <h:panelGroup  rendered="#{berechnungBean.berechnung.isGuiCheckedAktuellRKW}" layout="block"> 
+                        <div class="row"> 
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Rückkaufswert: 
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    <h:inputText id="vertragAktuellRKWBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragAktuellRKWBetrag}" title="Geben Sie einen Betrag an z. B. 123,56" >
+                                        <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6 control-label">
+                                zum:
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <p:calendar 
+                                    id="vertragAktuellRKWDatum" 
+                                    value="#{berechnungBean.berechnung.vertragAktuellRKWDatum}" 
+                                    locale="de" 
+                                    navigator="true" 
+                                    pattern="dd.MM.yyyy">
+                                    <f:converter converterId="localDateTimeConverter" />               
+                                </p:calendar>
+                                <!--<input type="date" class="form-control" locale="de" minlength="4" maxlength="10"  pattern="dd.MM.yyyy" title="Geben Sie bitte das Datum der Standmitteilung ein"/>-->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div>
+
+                        <div class="row">                            
+                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                Beitragssumme:
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">€</span>
+                                    <h:inputText id="vertragPlausiBeitragssummeBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragPlausiBeitragssummeBetrag}" title="Geben Sie die bisherige Beitragssumme an, z. B. 20.281,80" >
+                                        <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group"></div>
+                        </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+
+                <div class="panel-heading"><h4>Angaben zu den Versicherungsleistungen</h4></div>
+                <div class="panel-body">       
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>
+<!--                                    <input id="todesfallleistungCheckbox" type="checkbox" class="btn btn-info" data-toggle="collapse" data-target="#todesfallleistung" >Wurden Leistungen im Todesfall vereinbart?</input>-->
+                                    <h:selectBooleanCheckbox value="#{berechnungBean.berechnung.isGuiCheckedTodesfallleistung}" >
+                                        <f:ajax execute="@this" render="vertragTodesfallleistungGroup" ></f:ajax>
+                                    </h:selectBooleanCheckbox>Wurden Leistungen im Todesfall vereinbart?
+                                </label>
+                            </div>                           
+                        </div>                           
+                    </div>
+<!--                    <div id="todesfallleistung" class="row collapse">-->
+                    <h:panelGroup id="vertragTodesfallleistungGroup">
+                        <h:panelGroup  rendered="#{berechnungBean.berechnung.isGuiCheckedTodesfallleistung}" layout="block"> 
+                        <div class="row">                            
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Art der Leistung:
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <select size="5" jsf:id="vertragLeistungTodArt"  name="vertragLeistungTodArt" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungTodArt}"  >                                 
+                                        <f:selectItem itemValue="0" itemLabel="keine"/>   
+                                        <f:selectItem itemValue="1" itemLabel="Auszahlung des Vertragsguthabens"/> 
+                                        <f:selectItem itemValue="2" itemLabel="Auszahlung einer Todesfallsumme"/> 
+                                        <!--                                        <f:selectItem itemValue="3" itemLabel="Auszahlung in Prozent der Beitragssumme"/> -->
+                                        <f:selectItem itemValue="-1" itemLabel="keine Ahnung"/>
+                                    </select>                                    
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Höhe der Leistung: 
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <h:inputText id="vertragLeistungTodBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungTodBetrag}" title="Geben Sie die Leistungshöhe an, z. B. 240.000,00" >
+                                            <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        
+                                                <div class="row">
+                                                    <div class="checkbox-inline">
+                                                        <label>
+                                                            <div class="col-md-12 col-sm-3 col-xs-6">
+                                                                <input type="checkbox" class="btn btn-info" data-toggle="collapse" data-target="#verbundeneleben" jsf:id="vertragIsVerbundeneLeben" name="vertragIsVerbundeneLeben" value="#{berechnungBean.berechnung.vertragIsVerbundeneLeben}" >Vertrag mit verbundenen Leben?</input>  
+                                                            </div>
+                                                        </label>
+                                                    </div>                           
+                                                </div>
+                                                <div id="verbundeneleben" class="row collapse">
+                                                    <div class="row">                            
+                                                        <div class="form-group">
+                                                            <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                                                Partnergeburtsjahr:
+                                                            </div>
+                                                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                                                <input type="text" jsf:id="vertragPartnerGeburtsjahr" name="vertragPartnerGeburtsjahr" class="form-control" value="#{berechnungBean.berechnung.vertragPartnerGeburtsjahr}" placeholder="Jahreszahl (4-stellig)"  maxlength="4"  pattern="[0-9]*" title="Geben Sie bitte nur die Jahreszahl an"></input>  
+                                                            </div>                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        -->
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>
+<!--                                    <input id="unfalltodesfallleistungCheckbox" type="checkbox" class="btn btn-info" data-toggle="collapse" data-target="#unfalltodesfallleistung">Wurden Leistungen bei Unfalltod vereinbart?</input>-->
+                                    <h:selectBooleanCheckbox value="#{berechnungBean.berechnung.isGuiCheckedUnfalltodesfallleistung}" >
+                                        <f:ajax execute="@this" render="vertragUnfalltodesfallleistungGroup"></f:ajax>
+                                    </h:selectBooleanCheckbox>Wurden Leistungen bei Unfalltod vereinbart?
+                                </label>
+                            </div>
+                        </div>                           
+                    </div>
+<!--                    <div id="unfalltodesfallleistung" class="row collapse">-->
+                    <h:panelGroup id="vertragUnfalltodesfallleistungGroup">
+                        <h:panelGroup  rendered="#{berechnungBean.berechnung.isGuiCheckedUnfalltodesfallleistung}" layout="block"> 
+                        <div class="row">                            
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Art der Leistung: 
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <select size="3" jsf:id="vertragLeistungUnfalltodArt"  name="vertragLeistungUnfalltodArt" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungUnfalltodArt}"  >
+                                        <f:selectItem itemValue="0" itemLabel="keine"/> 
+                                        <f:selectItem itemValue="1" itemLabel="Auszahlung einer Unfalltodesfallsumme"/>   
+                                        <f:selectItem itemValue="-1" itemLabel="keine Ahnung"/>
+                                    </select>                                    
+                                </div>
+
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Höhe der Leistung: 
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">€</span>
+                                            <h:inputText id="vertragLeistungUnfalltodBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungUnfalltodBetrag}" title="Geben Sie die Leistungshöhe bei Unfalltod an, z. B. 94.660,90" >
+                                                <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00"/>
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                    <div class="row">
+                        <div class="checkbox-inline">
+                            <label>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<!--                                    <input id="buleistungCheckbox" type="checkbox" class="btn btn-info" data-toggle="collapse" data-target="#buleistung">Wurden Leistungen bei Berufsunfähigkeit vereinbart?</input>-->
+                                    <h:selectBooleanCheckbox value="#{berechnungBean.berechnung.isGuiCheckedBULeistung}" >
+                                        <f:ajax execute="@this" render="vertragBULeistungGroup"></f:ajax>
+                                    </h:selectBooleanCheckbox>Wurden Leistungen bei Berufsunfähigkeit vereinbart?
+                                </div>
+                            </label>
+                        </div>                           
+                    </div>
+<!--                    <div id="buleistung" class="row collapse">-->
+                    <h:panelGroup id="vertragBULeistungGroup">
+                        <h:panelGroup  rendered="#{berechnungBean.berechnung.isGuiCheckedBULeistung}" layout="block"> 
+                        <div class="row">                            
+                            <div class="form-group">
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Art der Leistung: 
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-6">
+                                    <select jsf:id="vertragLeistungBUArt"  name="vertragLeistungBUArt" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungBUArt}"  >
+                                        <f:selectItem itemValue="0" itemLabel="keine"/>   
+                                        <f:selectItem itemValue="1" itemLabel="nur Beitragsbefreiung"/> 
+                                        <f:selectItem itemValue="2" itemLabel="Monatsrente"/> 
+                                        <f:selectItem itemValue="3" itemLabel="Monatsrente und Beitragsbefreiung"/> 
+                                        <f:selectItem itemValue="-1" itemLabel="keine Ahnung"/>
+                                    </select>                                    
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6 control-label">
+                                    Höhe der Monatsrente:
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-xs-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <h:inputText id="vertragLeistungBUBetrag" class="form-control" value="#{berechnungBean.berechnung.vertragLeistungBUBetrag}"  title="Geben Sie die Monatsrente an, z. B. 810,00">
+                                            <f:convertNumber locale="de_DE" type="number" maxFractionDigits="2" pattern="#,##0.00" />
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+
+                <div class="panel-heading"> <h4>Berechnung zur Erstattungshöhe ausführen</h4></div>
+                <div class="panel-body">       
+                    <div class="row">                             
+                        <div class="form-group"></div>                       
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+
+                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 col-md-offset-9">                                                                                 
+                                <button title="Berechnung starten" type="submit" class="btn btn-primary" jsf:action="#{berechnungBean.starteBerechnung('berechnungsergebnis')}">
+                                    Berechnung starten
+                                </button>  
+                            </div>    
+                        </div>                                
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="text-info">Copyright &#169; 2016 Prof. Dr. Philipp Schade</p>                       
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+            $('#beitragsdynamikCheckbox').prop('checked', #{berechnungBean.berechnung.isGuiCheckedBeitragsdynamik});
+            $('#aktuellrkwbekanntCheckbox').prop('checked', #{berechnungBean.berechnung.isGuiCheckedAktuellRKW});
+            $('#todesfallleistungCheckbox').prop('checked', #{berechnungBean.berechnung.isGuiCheckedTodesfallleistung});
+            $('#unfalltodesfallleistungCheckbox').prop('checked', #{berechnungBean.berechnung.isGuiCheckedUnfalltodesfallleistung});
+            $('#buleistungCheckbox').prop('checked', #{berechnungBean.berechnung.isGuiCheckedBULeistung});
+            $('#beitragsdynamik')
+                    .attr("class", #{berechnungBean.berechnung.isGuiCheckedBeitragsdynamik} ? "row collapse in" : "row collapse");
+            $('#aktuellrkwbekannt')
+                    .attr("class", #{berechnungBean.berechnung.isGuiCheckedAktuellRKW} ? "row collapse in" : "row collapse");
+            $('#todesfallleistung')
+                    .attr("class", #{berechnungBean.berechnung.isGuiCheckedTodesfallleistung} ? "row collapse in" : "row collapse");
+            $('#unfalltodesfallleistung')
+                    .attr("class", #{berechnungBean.berechnung.isGuiCheckedUnfalltodesfallleistung} ? "row collapse in" : "row collapse");
+            $('#buleistung')
+                    .attr("class", #{berechnungBean.berechnung.isGuiCheckedBULeistung} ? "row collapse in" : "row collapse");
+        });
+    </script>
+    <h:outputScript>
+
+    </h:outputScript>
+</ui:composition> 

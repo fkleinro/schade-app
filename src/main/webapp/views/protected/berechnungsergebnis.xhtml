@@ -1,0 +1,217 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <div class="view">
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <h3>Ermittelter möglicher Rückerstattungswert:</h3></div>
+                <div class="panel-body">  
+                    <div class="berechnungErgebnis">
+                        <h:messages  class="alert alert-info"  for="mainForm" />
+                        <p:focus for="backBerechnungButton"/>
+                        <div class="row">                            
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Erstattungsbetrag:
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="rueErstattungApproxVon" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungApproxVon}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                                bis
+                                <h:outputText id="rueErstattungApproxBis" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungApproxBis}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Erstattungsbetrag (intern):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="rueErstattungApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <hr></hr>
+<!--                        <h:panelGroup id="aktuellrkwbetragRow">
+                            <h:panelGroup  rendered="#{berechnungBean.berechnung.getVertragAktuellRKWBetrag().shortValue() > 0.}" layout="block"> -->
+                        <div id="aktuellrkwbetragRow" class="collapse">
+                            <div class="row">                             
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    Rückkaufswert (laut Eingabe, 
+                                    <h:outputText id="rkwEingabeDatum" value="#{berechnungsergebnisBean.berechnung.vertragAktuellRKWDatum}">
+                                        <f:converter converterId="localDateTimeConverter" />                                      
+                                    </h:outputText>):
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-xs-2">
+                                    <h:outputText id="rkwEingabe" value="#{berechnungsergebnisBean.berechnung.vertragAktuellRKWBetrag}">
+                                        <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                    </h:outputText>  
+                                </div>                       
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    Zusätzliche Erstattung (von/bis):
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <h:outputText id="rueErstattungApproxSupVon" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungApproxSupBis}">
+                                        <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                    </h:outputText>    
+                                    bis
+                                    <h:outputText id="rueErstattungApproxSupBis" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungApproxSupBis}">
+                                        <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                    </h:outputText>    
+                                </div>
+                            </div>
+                        </div>
+<!--                            </h:panelGroup>
+                        </h:panelGroup>
+-->
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Rückkaufswert (Schätzung):
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-xs-2">
+                                <h:outputText id="rkwApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.rkwApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Zusätzliche Erstattung (von/bis):
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                <h:outputText id="rueErstattungRKWApproxSupVon" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungRKWApproxSupVon}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                                bis
+                                <h:outputText id="rueErstattungRKWApproxSupBis" value="#{berechnungsergebnisBean.berechnung.ergebnis.rueErstattungRKWApproxSupBis}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Beitragssumme (bisher):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="beitragSummeApproxEcht" value="#{berechnungsergebnisBean.berechnung.ergebnis.beitragSummeApproxEcht}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Beitragssumme (vertraglich):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="beitragSummeApproxGesamt" value="#{berechnungsergebnisBean.berechnung.ergebnis.beitragSummeApproxGesamt}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <hr></hr>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Risikokosten (gesamt):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="beitragSummeRisikobeitragApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.beitragSummeRisikobeitragApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Risikokosten (Tod):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="beitragSummeRisikobeitragTodApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.beitragSummeRisikobeitragTodApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Risikokosten (BU):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="beitragSummeRisikobeitragBUApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.beitragSummeRisikobeitragBUApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <hr></hr>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Daumenformel (bisher):
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="ruePfuschApprox" value="#{berechnungsergebnisBean.berechnung.ergebnis.ruePfuschApprox}">
+                                    <f:convertNumber locale="de_DE" type="currency" currencySymbol="€" maxFractionDigits="0" pattern="#,##0"/>
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <hr></hr>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Plausibilitätscode:
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="plausiCode" value="#{berechnungsergebnisBean.berechnung.ergebnis.plausiCode}">
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Berechnung plausibel:
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="plausibel" value="#{berechnungsergebnisBean.berechnung.ergebnis.plausibel}">
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                Bemerkung zur Plausibilität:
+                            </div>
+                            <div class="col-lg-9 col-sm-9 col-xs-9">
+                                <h:outputText id="plausitext" value="#{berechnungsergebnisBean.berechnung.ergebnis.getFehlerWarnungenPretty()}">
+                                </h:outputText>    
+                            </div>                       
+                        </div>
+                        <div class="row">                             
+                            <div class="form-group"></div>                       
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-lg-offset-9 col-md-offset-9">                                                                                 
+                                    <button title="Zurück zum Rechner" type="submit" class="btn btn-primary"  jsf:id="backBerechnungButton" jsf:action="#{berechnungsergebnisBean.navigate('berechnung')}">
+                                        Zurück zum Rechner...
+                                    </button>                                     
+                                </div>    
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="text-info">Copyright &#169; 2016 Prof. Dr. Philipp Schade</p>                       
+            </div>
+        </div>
+    </div>    
+
+    <script>
+        $(document).ready(function () {
+            $('#aktuellrkwbetragRow')
+                    .attr("class", #{berechnungBean.berechnung.getVertragAktuellRKWBetrag().shortValue() > 0.} ? "collapse in" : "collapse");
+        });
+    </script>
+<!--
+            $('#aktuellrkwbetragRow')
+                    .attr("class", #{berechnungBean.berechnung.getVertragAktuellRKWBetrag().shortValue() > 0.} ? "row collapse in" : "row collapse");
+
+-->
+</ui:composition> 
